@@ -10,7 +10,7 @@ task("createitem1155", "Mints ERC1155 to selected account")
 .setAction(async (args, hre) => {
     const marketplace = await hre.ethers.getContractAt("Marketplace", process.env.MARKETPLACE_ADDRESS as string);
     
-    const createResponse = await marketplace.createItem1155(args.recipient, args.amount,`ipfs://${args.cid}`);
+    const createResponse = await marketplace.createItem(true, args.recipient, args.amount,`ipfs://${args.cid}`);
     const createReceipt = await createResponse.wait();
 
     console.log("Your NFT successfully minted");

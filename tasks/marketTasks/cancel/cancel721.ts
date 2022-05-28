@@ -9,6 +9,6 @@ task("cancel721", "Removes ERC1155 token from sale")
 .setAction(async (args, hre) => {
     const marketplace = await hre.ethers.getContractAt("Marketplace", process.env.MARKETPLACE_ADDRESS as string);
     
-    await marketplace.cancel721(args.id);
+    await marketplace.cancel(false, args.id);
     console.log("Your ERC721 NFT successfully unlisted");
 });

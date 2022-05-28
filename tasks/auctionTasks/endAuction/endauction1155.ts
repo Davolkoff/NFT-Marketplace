@@ -8,6 +8,6 @@ task("endauction1155", "Ends the ERC1155 auction")
 .setAction(async (args, hre) => {
     const marketplace = await hre.ethers.getContractAt("Marketplace", process.env.MARKETPLACE_ADDRESS as string);
     
-    await marketplace.finishAuction1155(args.id);
+    await marketplace.finishAuction(true, args.id);
     console.log("Auction successfully ended");
 });

@@ -3,6 +3,7 @@ import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-etherscan";
 import "solidity-coverage";
 import "./tasks";
+import "hardhat-gas-reporter"
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ export default {
     cache: "./cache",
     artifacts: "./artifacts"
   },
-  defaultNetwork: "rinkeby",
+  defaultNetwork: "hardhat",
   networks: {
     rinkeby:{
       url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}`,
@@ -32,5 +33,9 @@ export default {
   etherscan: {
     apiKey: process.env.ETHERSCAN_API
   },
-  plugins: ["solidity-coverage", "dotenv", "hardhat-etherscan"]
+  gasReporter: {
+    enabled: true,
+    currency: "ETH",
+    coinmarketcap: process.env.COINMARKETCAP_API
+  }
 };
