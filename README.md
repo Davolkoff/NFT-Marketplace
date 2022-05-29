@@ -1,26 +1,31 @@
-# Staking contract
+# NFT Marketplace
 
 >In this project I created my own NFT Marketplace, that allows you to create, sell, buy, and list on auction ERC721 and ERC1155 tokens. The ERC721 and ERC1155 tokens were inherited from openzeppelin. Tasks allow you to get the full functionality of the marketplace, tests have full coverage
 -------------------------
 # Table of contents
 1. <b>Deploying</b>
- + [Deploy ERC20 token](#Deploy-erc20)
- + [Deploy ERC721 token](#Deploy-erc721)
- + [Deploy ERC1155 token](#Deploy-erc1155)
- + [Deploy marketplace contract](#Deploy-marketplace)
- + [Connect marketplace to tokens](#Connect)
- + [Mint ERC20 on your address](#Mint-erc20)
+  + [Deploy ERC20 token](#Deploy-erc20)
+  + [Deploy ERC721 token](#Deploy-erc721)
+  + [Deploy ERC1155 token](#Deploy-erc1155)
+  + [Deploy marketplace contract](#Deploy-marketplace)
+  + [Connect marketplace to tokens](#Connect)
+  + [Mint ERC20 on your address](#Mint-erc20)
 2. <b>Creating NFTs</b>
- + [Create ERC721 token](#Create-erc721)
- + [Create ERC1155 token](#Create-erc1155)
+  + [Create ERC721 token](#Create-erc721)
+  + [Create ERC1155 token](#Create-erc1155)
 3. <b>Purchase and sale of NFT</b>
- + [Put NFT up for sale](#Sell-nft)
- + [Cancel the sale of NFT](#Cancel-selling)
- + [Buy NFT](#Buy-nft)
+  + [Put NFT up for sale](#Sell-nft)
+  + [Cancel the sale of NFT](#Cancel-selling)
+  + [Buy NFT](#Buy-nft)
 4. <b>NFT auction</b>
- + [Put NFT up for auction](#Start-auction)
- + [Make bid](#Make-bid)
- + [End the auction](#End-auction)
+  + [Put NFT up for auction](#Start-auction)
+  + [Make bid](#Make-bid)
+  + [End the auction](#End-auction)
+5. <b>Readable functions</b>
+  + [Is NFT listed](#Listed)
+  + [Price of the NFT](#Price)
+  + [Is NFT listed on auction](#On-auction)
+  + [Last bid on the auction](#Last-bid)
 -------------------------
 ## 1. Deploying
 
@@ -221,3 +226,61 @@ hardhat endauction721 --id 0
 hardhat endauction1155 --id 1
 ```
 -------------------------
+## 5. Readable functions
+>These functions work with both types of tokens. They do not change anything, they just display important information for the user. After executing this commands you'll see the necessary information in terminal
+
+#### <a name="Listed"></a> <b>- Is NFT listed:</b> 
+```shell
+Usage: hardhat [GLOBAL OPTIONS] listed --id <STRING>
+
+OPTIONS:
+
+  --id  Id of token 
+
+
+Example:
+
+hardhat listed --id 0 
+```
+
+#### <a name="Price"></a> <b>- Price of the NFT:</b> 
+```shell
+Usage: hardhat [GLOBAL OPTIONS] price --id <STRING>
+
+OPTIONS:
+
+  --id  Id of token 
+
+
+Example:
+
+hardhat price --id 0
+```
+
+#### <a name="On-auction"></a> <b>- Is NFT listed on auction:</b> 
+```shell
+Usage: hardhat [GLOBAL OPTIONS] onauction --id <STRING>
+
+OPTIONS:
+
+  --id  Id of token 
+
+
+Example:
+
+hardhat onauction --id 1
+```
+
+#### <a name="Last-bid"></a> <b>- Last bid on the auction:</b> 
+```shell
+Usage: hardhat [GLOBAL OPTIONS] lastbid --id <STRING>
+
+OPTIONS:
+
+  --id  Id of auction 
+
+
+Example:
+
+hardhat lastbid --id 1
+```
