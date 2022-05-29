@@ -9,18 +9,20 @@ describe("ERC20 functions", function () {
   let addr2: SignerWithAddress;
   let contract: Contract;
 
-  beforeEach(async function() {
-  [owner, addr1, addr2] = await ethers.getSigners();
+  describe("Deploying", function () {
+    it("Should deploy ERC20 contract and mint them on your balance", async function () {
+      [owner, addr1, addr2] = await ethers.getSigners();
+      const token20 = await ethers.getContractFactory("MyERC20");
+      contract = await token20.deploy("DVCoin", "DVC", 18);
 
-  const ERC20 = await ethers.getContractFactory("MyERC20");
-  contract = await ERC20.deploy("DVCoin", "DVC", 18);
-
-  await contract.deployed();
-  await contract.mint(addr1.address, "100000000");
+      await contract.deployed();
+    });
   });
 
   describe("Returning information", function(){
+
     it("Should return total supply of token", async function() {
+      await contract.mint(addr1.address, "100000000");
       expect(await contract.totalSupply()).to.equal(100000000);
     });
 
@@ -79,7 +81,7 @@ describe("ERC20 functions", function () {
     });
 
     it("Should mint tokens", async function() {
-      expect(await contract.balanceOf(owner.address)).to.equal(100000000);
+      expect(await contract.balanceOf(owner.address)).to.equal(899999000);
     });
 
     it("Should burn tokens", async function() {
