@@ -211,11 +211,12 @@ describe("Marketplace", function () {
       await expect(marketplace.makeBid(1, 100)).to.be.revertedWith("You should bid more than last bidder");
     });
 
-    it("Should return you your bid if someone make bid more", async function() {
+    it("Should allow you to return your last bid if someone bid more", async function() {
       await token20.mint(addr2.address, 300);
       await token20.connect(addr2).approve(marketplace.address, 300);
       
       await marketplace.connect(addr2).makeBid(0, 300);
+      await marketplace.withdrawCancelledBids();
       expect(await token20.balanceOf(owner.address)).to.equal(500); //300 tokens from selling tokens + 200 tokens from reverted bid
       expect(await token20.balanceOf(marketplace.address)).to.equal(700); //300 tokens from ERC721 bid + 400 from ERC1155 bid
     });

@@ -31,6 +31,7 @@ contract Marketplace is ERC1155Holder {
     mapping(uint256 => Token) private _tokens; // combined ERC721 and ERC1155 of marketplace in mapping 
     mapping(uint256 => Auction) private _auctions; // mapping of auctions
     mapping(uint256 => uint256) private _prices; // prices of NFT on sale
+    mapping(address => uint256) private _lastBidBalances; // returned bids
 
     event ItemCreated (
         bool standard, // 0 - ERC721, 1 - ERC1155
@@ -135,18 +136,25 @@ contract Marketplace is ERC1155Holder {
 
     // make bid on auction (works with ERC721 and ERC1155 without bool)
     function makeBid(uint256 tokenId_, uint256 amount_) external {
+        uint256 totalBid = amount_ + _lastBidBalances[msg.sender];
+
         require(_tokens[tokenId_].onAuction, "Token is not on auction");
         require(_auctions[tokenId_].expirationTime > block.timestamp, "Time out");
-        require(_auctions[tokenId_].lastBid < amount_, "You should bid more than last bidder");
+        require(totalBid > _auctions[tokenId_].lastBid, "You should bid more than last bidder");
         
-        token20.transferFrom(msg.sender, address(this), amount_);
+        token20.transferFrom(msg.sender, address(this), totalBid);
 
         if(_auctions[tokenId_].lastBidder != address(0)) {
-            token20.transfer(_auctions[tokenId_].lastBidder, _auctions[tokenId_].lastBid);
+            _lastBidBalances[_auctions[tokenId_].lastBidder] += _auctions[tokenId_].lastBid;
         }
 
         _auctions[tokenId_].lastBidder = msg.sender;
-        _auctions[tokenId_].lastBid = amount_;
+        _auctions[tokenId_].lastBid = totalBid;
+    }
+
+    // withdraw canceled bids
+    function withdrawCancelledBids() external {
+        token20.transfer(msg.sender, _lastBidBalances[msg.sender]);
     }
 
     // finish ERC721 auction

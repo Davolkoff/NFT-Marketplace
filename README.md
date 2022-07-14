@@ -20,6 +20,7 @@
 4. <b>NFT auction</b>
   + [Put NFT up for auction](#Start-auction)
   + [Make bid](#Make-bid)
+  + [Withdraw cancelled bids](#Wbids)
   + [End the auction](#End-auction)
 5. <b>Readable functions</b>
   + [Is NFT listed](#Listed)
@@ -191,7 +192,7 @@ hardhat listauction721 --exp 600 --id 0 --minbid 100
 hardhat listauction1155 --exp 1200 --id 0 --minbid 150
 ```
 
-#### <a name="Make-bid"></a> <b>- Make bid:</b>
+#### <a name="Make-bid"></a> <b>- Make bid (If someone makes a bet more than you, your funds will be transferred to a reserve balance from which you can either withdraw funds. The contract also provides for the function of raising the rate without withdrawing funds from the reserve balance):</b>
 >This function works equally with ERC721 and ERC1155 tokens
 ```shell
 Usage: hardhat [GLOBAL OPTIONS] makebid --amount <STRING> --id <STRING>
@@ -205,6 +206,12 @@ OPTIONS:
 Example:
 
 hardhat makebid --amount 700 --id 0
+```
+
+#### <a name="Wbids"></a> <b>- Withdraw cancelled bids (Withdrawal of money from your reserve balance):</b>
+>This function works equally with ERC721 and ERC1155 tokens
+```shell
+npx hardhat wbids
 ```
 
 #### <a name="End-auction"></a> <b>- End the auction:</b>
